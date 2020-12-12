@@ -1,26 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.API", "Chinook.API\Chinook.API.csproj", "{3B30A8B7-91BA-4549-9253-548304AE5F37}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.API", "Chinook.API\Chinook.API.csproj", "{3B30A8B7-91BA-4549-9253-548304AE5F37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.DataEFCore", "Chinook.DataEFCore\Chinook.DataEFCore.csproj", "{67636B86-8C4B-44C4-801D-872E9B1E20A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.DataEFCore", "Chinook.DataEFCore\Chinook.DataEFCore.csproj", "{67636B86-8C4B-44C4-801D-872E9B1E20A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.DataEFCoreCmpldQry", "Chinook.DataEFCoreCmpldQry\Chinook.DataEFCoreCmpldQry.csproj", "{E362BBFE-E3D5-44D7-A2BE-39C64AB926AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.Domain", "Chinook.Domain\Chinook.Domain.csproj", "{920E772F-A81B-49FB-846F-32D4B192FBCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.Domain", "Chinook.Domain\Chinook.Domain.csproj", "{920E772F-A81B-49FB-846F-32D4B192FBCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.IntegrationTest", "Chinook.IntegrationTest\Chinook.IntegrationTest.csproj", "{56321F1C-B24E-40BB-A089-4C914F56480C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.DataMock", "Chinook.DataMock\Chinook.DataMock.csproj", "{0BC8DA66-7AF2-4623-A197-3A7DB07315D0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.IntegrationTest", "Chinook.IntegrationTest\Chinook.IntegrationTest.csproj", "{56321F1C-B24E-40BB-A089-4C914F56480C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.UnitTest", "Chinook.UnitTest\Chinook.UnitTest.csproj", "{C9B07EA2-278B-4DB8-A696-B0B0606E214E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.DataJson", "Chinook.DataJson\Chinook.DataJson.csproj", "{328CF41A-C3A2-471E-9465-4BAE4ADC1AD3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.DataDapper", "Chinook.DataDapper\Chinook.DataDapper.csproj", "{C67BC203-09A6-425C-BB13-73C7A7696564}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.DataMartendb", "Chinook.DataMartendb\Chinook.DataMartendb.csproj", "{2B8511C4-B066-440B-8BA2-141E54A1F171}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.DataRepoDb", "Chinook.DataRepoDb\Chinook.DataRepoDb.csproj", "{F6D0DCAD-87EC-4BFA-8EE9-12C3FC474145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.UnitTest", "Chinook.UnitTest\Chinook.UnitTest.csproj", "{C9B07EA2-278B-4DB8-A696-B0B0606E214E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,18 +27,10 @@ Global
 		{67636B86-8C4B-44C4-801D-872E9B1E20A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67636B86-8C4B-44C4-801D-872E9B1E20A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67636B86-8C4B-44C4-801D-872E9B1E20A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E362BBFE-E3D5-44D7-A2BE-39C64AB926AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E362BBFE-E3D5-44D7-A2BE-39C64AB926AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E362BBFE-E3D5-44D7-A2BE-39C64AB926AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E362BBFE-E3D5-44D7-A2BE-39C64AB926AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{920E772F-A81B-49FB-846F-32D4B192FBCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{920E772F-A81B-49FB-846F-32D4B192FBCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{920E772F-A81B-49FB-846F-32D4B192FBCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{920E772F-A81B-49FB-846F-32D4B192FBCB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BC8DA66-7AF2-4623-A197-3A7DB07315D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BC8DA66-7AF2-4623-A197-3A7DB07315D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BC8DA66-7AF2-4623-A197-3A7DB07315D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BC8DA66-7AF2-4623-A197-3A7DB07315D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56321F1C-B24E-40BB-A089-4C914F56480C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56321F1C-B24E-40BB-A089-4C914F56480C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56321F1C-B24E-40BB-A089-4C914F56480C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,21 +39,11 @@ Global
 		{C9B07EA2-278B-4DB8-A696-B0B0606E214E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9B07EA2-278B-4DB8-A696-B0B0606E214E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9B07EA2-278B-4DB8-A696-B0B0606E214E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{328CF41A-C3A2-471E-9465-4BAE4ADC1AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{328CF41A-C3A2-471E-9465-4BAE4ADC1AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{328CF41A-C3A2-471E-9465-4BAE4ADC1AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{328CF41A-C3A2-471E-9465-4BAE4ADC1AD3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C67BC203-09A6-425C-BB13-73C7A7696564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C67BC203-09A6-425C-BB13-73C7A7696564}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C67BC203-09A6-425C-BB13-73C7A7696564}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C67BC203-09A6-425C-BB13-73C7A7696564}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B8511C4-B066-440B-8BA2-141E54A1F171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B8511C4-B066-440B-8BA2-141E54A1F171}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B8511C4-B066-440B-8BA2-141E54A1F171}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B8511C4-B066-440B-8BA2-141E54A1F171}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6D0DCAD-87EC-4BFA-8EE9-12C3FC474145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6D0DCAD-87EC-4BFA-8EE9-12C3FC474145}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6D0DCAD-87EC-4BFA-8EE9-12C3FC474145}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6D0DCAD-87EC-4BFA-8EE9-12C3FC474145}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A986EEA3-400D-4821-A521-DAC2EE4E519E}
 	EndGlobalSection
 EndGlobal
