@@ -4,6 +4,9 @@ namespace Chinook.Domain.DbInfo
     {
         public string ConnectionStrings { get; }
 
-        public DbInfo(string connectionStrings) => ConnectionStrings = connectionStrings;
+        public DbInfo(string connectionStrings)
+        {
+            ConnectionStrings = connectionStrings;
+        }
     }
 }

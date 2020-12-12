@@ -30,9 +30,9 @@ namespace Chinook.API.Configurations
 
             services.AddDbContextPool<ChinookContext>(options => options.UseSqlServer(connection));
 
-            services.AddSingleton(new SqlConnection(connection));
+            //services.AddSingleton(new SqlConnection(connection));
             
-            services.AddSingleton(new DbInfo(connection));
+            //services.AddSingleton(new DbInfo(connection));
 
             return services;
         }
