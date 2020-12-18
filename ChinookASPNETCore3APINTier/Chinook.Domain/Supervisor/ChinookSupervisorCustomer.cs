@@ -2,17 +2,18 @@
     
     using System.Collections.Generic;
     using System.Linq;
-    using Chinook.Domain.Extensions;
-    using Chinook.Domain.ApiModels;
+using Chinook.Domain.Entities;
+using Chinook.Domain.Extensions;
+    
     using Microsoft.Extensions.Caching.Memory;
 
     namespace Chinook.Domain.Supervisor
     {
         public partial class ChinookSupervisor
         {
-            public IEnumerable<CustomerApiModel> GetAllCustomer()
+            public IEnumerable<Customer> GetAllCustomer()
             {
-                var customers = _customerRepository.GetAll().ConvertAll();
+                var customers = _customerRepository.GetAll();
                 foreach (var customer in customers)
                 {
                     var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
@@ -21,79 +22,79 @@
                 return customers;
             }
 
-            public CustomerApiModel GetCustomerById(int id)
+            public Customer GetCustomerById(int id)
             {
-                var customerApiModelCached = _cache.Get<CustomerApiModel>(string.Concat("Customer-", id));
+                var customerCached = _cache.Get<Customer>(string.Concat("Customer-", id));
 
-                if (customerApiModelCached != null)
+                if (customerCached != null)
                 {
-                    return customerApiModelCached;
+                    return customerCached;
                 }
                 else
                 {
-                    var customerApiModel = (_customerRepository.GetById(id)).Convert();
-                    customerApiModel.Invoices = (GetInvoiceByCustomerId(customerApiModel.CustomerId)).ToList();
-                    customerApiModel.SupportRep =
-                        GetEmployeeById(customerApiModel.SupportRepId.GetValueOrDefault());
-                    customerApiModel.SupportRepName =
-                        $"{customerApiModel.SupportRep.LastName}, {customerApiModel.SupportRep.FirstName}";
+                    var customer = (_customerRepository.GetById(id));
+                    customer.Invoices = (GetInvoiceByCustomerId(customer.CustomerId)).ToList();
+                    customer.SupportRep =
+                        GetEmployeeById(customer.SupportRepId.GetValueOrDefault());
+                    customer.SupportRepName =
+                        $"{customer.SupportRep.LastName}, {customer.SupportRep.FirstName}";
 
                     var cacheEntryOptions =
                         new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
-                    _cache.Set(string.Concat("Customer-", customerApiModel.CustomerId), customerApiModel, cacheEntryOptions);
+                    _cache.Set(string.Concat("Customer-", customer.CustomerId), customer, cacheEntryOptions);
 
-                    return customerApiModel;
+                    return customer;
                 }
             }
 
-            public IEnumerable<CustomerApiModel> GetCustomerBySupportRepId(int id)
+            public IEnumerable<Customer> GetCustomerBySupportRepId(int id)
             {
                 var customers = _customerRepository.GetBySupportRepId(id);
-                return customers.ConvertAll();
+                return customers;
             }
 
-            public CustomerApiModel AddCustomer(CustomerApiModel newCustomerApiModel)
+            public Customer AddCustomer(Customer newCustomer)
             {
                 /*var customer = new Customer
                 {
-                    FirstName = newCustomerApiModel.FirstName,
-                    LastName = newCustomerApiModel.LastName,
-                    Company = newCustomerApiModel.Company,
-                    Address = newCustomerApiModel.Address,
-                    City = newCustomerApiModel.City,
-                    State = newCustomerApiModel.State,
-                    Country = newCustomerApiModel.Country,
-                    PostalCode = newCustomerApiModel.PostalCode,
-                    Phone = newCustomerApiModel.Phone,
-                    Fax = newCustomerApiModel.Fax,
-                    Email = newCustomerApiModel.Email,
-                    SupportRepId = newCustomerApiModel.SupportRepId
+                    FirstName = newCustomer.FirstName,
+                    LastName = newCustomer.LastName,
+                    Company = newCustomer.Company,
+                    Address = newCustomer.Address,
+                    City = newCustomer.City,
+                    State = newCustomer.State,
+                    Country = newCustomer.Country,
+                    PostalCode = newCustomer.PostalCode,
+                    Phone = newCustomer.Phone,
+                    Fax = newCustomer.Fax,
+                    Email = newCustomer.Email,
+                    SupportRepId = newCustomer.SupportRepId
                 };*/
 
-                var customer = newCustomerApiModel.Convert();
+                var customer = newCustomer;
 
                 customer = _customerRepository.Add(customer);
-                newCustomerApiModel.CustomerId = customer.CustomerId;
-                return newCustomerApiModel;
+                newCustomer.CustomerId = customer.CustomerId;
+                return newCustomer;
             }
 
-            public bool UpdateCustomer(CustomerApiModel customerApiModel)
+            public bool UpdateCustomer(Customer _customer)
             {
-                var customer = _customerRepository.GetById(customerApiModel.CustomerId);
+                var customer = _customerRepository.GetById(_customer.CustomerId);
 
                 if (customer == null) return false;
-                customer.FirstName = customerApiModel.FirstName;
-                customer.LastName = customerApiModel.LastName;
-                customer.Company = customerApiModel.Company;
-                customer.Address = customerApiModel.Address;
-                customer.City = customerApiModel.City;
-                customer.State = customerApiModel.State;
-                customer.Country = customerApiModel.Country;
-                customer.PostalCode = customerApiModel.PostalCode;
-                customer.Phone = customerApiModel.Phone;
-                customer.Fax = customerApiModel.Fax;
-                customer.Email = customerApiModel.Email;
-                customer.SupportRepId = customerApiModel.SupportRepId;
+                customer.FirstName = customer.FirstName;
+                customer.LastName = customer.LastName;
+                customer.Company = customer.Company;
+                customer.Address = customer.Address;
+                customer.City = customer.City;
+                customer.State = customer.State;
+                customer.Country = customer.Country;
+                customer.PostalCode = customer.PostalCode;
+                customer.Phone = customer.Phone;
+                customer.Fax = customer.Fax;
+                customer.Email = customer.Email;
+                customer.SupportRepId = customer.SupportRepId;
 
                 return _customerRepository.Update(customer);
             }

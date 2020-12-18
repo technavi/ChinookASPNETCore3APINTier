@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -26,8 +26,8 @@ namespace Chinook.API.Controllers
         /// </summary>
         /// <remarks>This API will get the values.</remarks>
         [HttpGet]
-        [Produces(typeof(List<AlbumApiModel>))]
-        public ActionResult<List<AlbumApiModel>> Get()
+        [Produces(typeof(List<Album>))]
+        public ActionResult<List<Album>> Get()
         {
             try
             {
@@ -40,8 +40,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(AlbumApiModel))]
-        public ActionResult<AlbumApiModel> Get(int id)
+        [Produces(typeof(Album))]
+        public ActionResult<Album> Get(int id)
         {
             try
             {
@@ -60,8 +60,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("artist/{id}")]
-        [Produces(typeof(List<AlbumApiModel>))]
-        public ActionResult<List<AlbumApiModel>> GetByArtistId(int id)
+        [Produces(typeof(List<Album>))]
+        public ActionResult<List<Album>> GetByArtistId(int id)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AlbumApiModel> Post([FromBody] AlbumApiModel input)
+        public ActionResult<Album> Post([FromBody] Album input)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<AlbumApiModel> Put(int id, [FromBody] AlbumApiModel input)
+        public ActionResult<Album> Put(int id, [FromBody] Album input)
         {
             try
             {

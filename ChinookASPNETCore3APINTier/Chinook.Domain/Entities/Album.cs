@@ -1,12 +1,12 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class Album : IConvertModel<Album, AlbumApiModel>
+    public class Album  
     {
         public Album()
         {
@@ -26,12 +26,7 @@ namespace Chinook.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<Track> Tracks { get; set; }
 
-        public AlbumApiModel Convert() =>
-            new AlbumApiModel
-            {
-                AlbumId = AlbumId,
-                ArtistId = ArtistId,
-                Title = Title
-            };
+        [NotMapped]
+        public string ArtistName { get; set; }
     }
 }

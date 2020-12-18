@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -20,8 +21,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<InvoiceApiModel>))]
-        public ActionResult<List<InvoiceApiModel>> Get()
+        [Produces(typeof(List<Invoice>))]
+        public ActionResult<List<Invoice>> Get()
         {
             try
             {
@@ -34,8 +35,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(InvoiceApiModel))]
-        public ActionResult<InvoiceApiModel> Get(int id)
+        [Produces(typeof(Invoice))]
+        public ActionResult<Invoice> Get(int id)
         {
             try
             {
@@ -54,8 +55,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("customer/{id}")]
-        [Produces(typeof(List<InvoiceApiModel>))]
-        public ActionResult<InvoiceApiModel> GetByCustomerId(int id)
+        [Produces(typeof(List<Invoice>))]
+        public ActionResult<Invoice> GetByCustomerId(int id)
         {
             try
             {
@@ -73,7 +74,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<InvoiceApiModel> Post([FromBody] InvoiceApiModel input)
+        public ActionResult<Invoice> Post([FromBody] Invoice input)
         {
             try
             {
@@ -89,7 +90,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<InvoiceApiModel> Put(int id, [FromBody] InvoiceApiModel input)
+        public ActionResult<Invoice> Put(int id, [FromBody] Invoice input)
         {
             try
             {
@@ -142,8 +143,8 @@ namespace Chinook.API.Controllers
         }
         
         [HttpGet("employee/{id}")]
-        [Produces(typeof(List<InvoiceApiModel>))]
-        public ActionResult<InvoiceApiModel> GetByEmployeeId(int id)
+        [Produces(typeof(List<Invoice>))]
+        public ActionResult<Invoice> GetByEmployeeId(int id)
         {
             try
             {

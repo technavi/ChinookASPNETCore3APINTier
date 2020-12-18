@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -21,8 +22,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<GenreApiModel>))]
-        public ActionResult<List<GenreApiModel>> Get()
+        [Produces(typeof(List<Genre>))]
+        public ActionResult<List<Genre>> Get()
         {
             try
             {
@@ -35,8 +36,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(GenreApiModel))]
-        public ActionResult<GenreApiModel> Get(int id)
+        [Produces(typeof(Genre))]
+        public ActionResult<Genre> Get(int id)
         {
             try
             {
@@ -55,7 +56,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<GenreApiModel> Post([FromBody] GenreApiModel input)
+        public ActionResult<Genre> Post([FromBody] Genre input)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<GenreApiModel> Put(int id, [FromBody] GenreApiModel input)
+        public ActionResult<Genre> Put(int id, [FromBody] Genre input)
         {
             try
             {

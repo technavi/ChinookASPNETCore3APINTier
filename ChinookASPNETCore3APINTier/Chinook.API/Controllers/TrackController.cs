@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -20,8 +21,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<TrackApiModel>))]
-        public ActionResult<List<TrackApiModel>> Get()
+        [Produces(typeof(List<Track>))]
+        public ActionResult<List<Track>> Get()
         {
             try
             {
@@ -34,8 +35,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(TrackApiModel))]
-        public ActionResult<TrackApiModel> Get(int id)
+        [Produces(typeof(Track))]
+        public ActionResult<Track> Get(int id)
         {
             try
             {
@@ -54,8 +55,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("album/{id}")]
-        [Produces(typeof(List<TrackApiModel>))]
-        public ActionResult<TrackApiModel> GetByAlbumId(int id)
+        [Produces(typeof(List<Track>))]
+        public ActionResult<Track> GetByAlbumId(int id)
         {
             try
             {
@@ -68,8 +69,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("mediatype/{id}")]
-        [Produces(typeof(List<TrackApiModel>))]
-        public ActionResult<TrackApiModel> GetByMediaTypeId(int id)
+        [Produces(typeof(List<Track>))]
+        public ActionResult<Track> GetByMediaTypeId(int id)
         {
             try
             {
@@ -82,8 +83,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("genre/{id}")]
-        [Produces(typeof(List<TrackApiModel>))]
-        public ActionResult<TrackApiModel> GetByGenreId(int id)
+        [Produces(typeof(List<Track>))]
+        public ActionResult<Track> GetByGenreId(int id)
         {
             try
             {
@@ -96,7 +97,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<TrackApiModel> Post([FromBody] TrackApiModel input)
+        public ActionResult<Track> Post([FromBody] Track input)
         {
             try
             {
@@ -112,7 +113,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<TrackApiModel> Put(int id, [FromBody] TrackApiModel input)
+        public ActionResult<Track> Put(int id, [FromBody] Track input)
         {
             try
             {
@@ -165,8 +166,8 @@ namespace Chinook.API.Controllers
         }
         
         [HttpGet("artist/{id}")]
-        [Produces(typeof(List<TrackApiModel>))]
-        public ActionResult<TrackApiModel> GetByArtistId(int id)
+        [Produces(typeof(List<Track>))]
+        public ActionResult<Track> GetByArtistId(int id)
         {
             try
             {
@@ -179,8 +180,8 @@ namespace Chinook.API.Controllers
         }
         
         [HttpGet("invoice/{id}")]
-        [Produces(typeof(List<TrackApiModel>))]
-        public ActionResult<TrackApiModel> GetByInvoiceId(int id)
+        [Produces(typeof(List<Track>))]
+        public ActionResult<Track> GetByInvoiceId(int id)
         {
             try
             {

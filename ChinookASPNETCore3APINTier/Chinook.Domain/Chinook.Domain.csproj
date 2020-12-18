@@ -6,6 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="ApiModels\**" />
+      <EmbeddedResource Remove="ApiModels\**" />
+      <None Remove="ApiModels\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="FluentValidation" Version="9.2.0" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="9.2.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="3.1.8" />

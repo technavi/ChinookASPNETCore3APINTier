@@ -1,11 +1,11 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
+
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class MediaType : IConvertModel<MediaType, MediaTypeApiModel>
+    public class MediaType  
     {
         public MediaType()
         {
@@ -18,11 +18,6 @@ namespace Chinook.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<Track> Tracks { get; set; }
         
-        public MediaTypeApiModel Convert() =>
-            new MediaTypeApiModel
-            {
-                MediaTypeId = MediaTypeId,
-                Name = Name
-            };
+        
     }
 }

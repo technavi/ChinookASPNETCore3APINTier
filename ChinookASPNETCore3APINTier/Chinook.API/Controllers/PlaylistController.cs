@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -20,8 +21,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<PlaylistApiModel>))]
-        public ActionResult<List<PlaylistApiModel>> Get()
+        [Produces(typeof(List<Playlist>))]
+        public ActionResult<List<Playlist>> Get()
         {
             try
             {
@@ -34,8 +35,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(PlaylistApiModel))]
-        public ActionResult<PlaylistApiModel> Get(int id)
+        [Produces(typeof(Playlist))]
+        public ActionResult<Playlist> Get(int id)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PlaylistApiModel> Post([FromBody] PlaylistApiModel input)
+        public ActionResult<Playlist> Post([FromBody] Playlist input)
         {
             try
             {
@@ -70,7 +71,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<PlaylistApiModel> Put(int id, [FromBody] PlaylistApiModel input)
+        public ActionResult<Playlist> Put(int id, [FromBody] Playlist input)
         {
             try
             {
@@ -123,8 +124,8 @@ namespace Chinook.API.Controllers
         }
         
         [HttpGet("track/{id}")]
-        [Produces(typeof(List<TrackApiModel>))]
-        public ActionResult<TrackApiModel> GetByTrackId(int id)
+        [Produces(typeof(List<Track>))]
+        public ActionResult<Track> GetByTrackId(int id)
         {
             try
             {

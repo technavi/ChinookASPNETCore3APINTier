@@ -1,12 +1,13 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
+
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class Invoice : IConvertModel<Invoice, InvoiceApiModel>
+    public class Invoice  
     {
         public Invoice()
         {
@@ -27,19 +28,8 @@ namespace Chinook.Domain.Entities
         public virtual Customer Customer { get; set; }
         [JsonIgnore]
         public virtual ICollection<InvoiceLine> InvoiceLines { get; set; }
-
-        public InvoiceApiModel Convert() =>
-            new InvoiceApiModel
-            {
-                InvoiceId = InvoiceId,
-                CustomerId = CustomerId,
-                InvoiceDate = InvoiceDate,
-                BillingAddress = BillingAddress,
-                BillingCity = BillingCity,
-                BillingState = BillingState,
-                BillingCountry = BillingCountry,
-                BillingPostalCode = BillingPostalCode,
-                Total = Total
-            };
+        
+        [NotMapped]
+        public string CustomerName { get; internal set; }
     }
 }

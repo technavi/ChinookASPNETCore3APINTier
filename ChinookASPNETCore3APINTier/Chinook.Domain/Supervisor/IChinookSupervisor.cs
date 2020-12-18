@@ -1,116 +1,117 @@
 ﻿using System.Collections.Generic;
-using Chinook.Domain.ApiModels;
+using Chinook.Domain.Entities;
+
 
 namespace Chinook.Domain.Supervisor
 {
     public interface IChinookSupervisor
     {
-        IEnumerable<AlbumApiModel> GetAllAlbum();
-        AlbumApiModel GetAlbumById(int id);
-        IEnumerable<AlbumApiModel> GetAlbumByArtistId(int id);
+        IEnumerable<Album> GetAllAlbum();
+        Album GetAlbumById(int id);
+        IEnumerable<Album> GetAlbumByArtistId(int id);
 
-        AlbumApiModel AddAlbum(AlbumApiModel newAlbumApiModel);
+        Album AddAlbum(Album newAlbum);
 
-        bool UpdateAlbum(AlbumApiModel albumApiModel);
+        bool UpdateAlbum(Album album);
         bool DeleteAlbum(int id);
-        IEnumerable<ArtistApiModel> GetAllArtist();
-        ArtistApiModel GetArtistById(int id);
+        IEnumerable<Artist> GetAllArtist();
+        Artist GetArtistById(int id);
 
-        ArtistApiModel AddArtist(ArtistApiModel newArtistApiModel);
+        Artist AddArtist(Artist newArtist);
 
-        bool UpdateArtist(ArtistApiModel artistApiModel);
+        bool UpdateArtist(Artist artist);
 
         bool DeleteArtist(int id);
-        IEnumerable<CustomerApiModel> GetAllCustomer();
-        CustomerApiModel GetCustomerById(int id);
+        IEnumerable<Customer> GetAllCustomer();
+        Customer GetCustomerById(int id);
 
-        IEnumerable<CustomerApiModel> GetCustomerBySupportRepId(int id);
+        IEnumerable<Customer> GetCustomerBySupportRepId(int id);
 
-        CustomerApiModel AddCustomer(CustomerApiModel newCustomerApiModel);
+        Customer AddCustomer(Customer newCustomer);
 
-        bool UpdateCustomer(CustomerApiModel customerApiModel);
+        bool UpdateCustomer(Customer customer);
 
         bool DeleteCustomer(int id);
-        IEnumerable<EmployeeApiModel> GetAllEmployee();
-        EmployeeApiModel GetEmployeeById(int id);
-        EmployeeApiModel GetEmployeeReportsTo(int id);
+        IEnumerable<Employee> GetAllEmployee();
+        Employee GetEmployeeById(int id);
+        Employee GetEmployeeReportsTo(int id);
 
-        EmployeeApiModel AddEmployee(EmployeeApiModel newEmployeeApiModel);
+        Employee AddEmployee(Employee newEmployee);
 
-        bool UpdateEmployee(EmployeeApiModel employeeApiModel);
+        bool UpdateEmployee(Employee employee);
 
         bool DeleteEmployee(int id);
 
-        IEnumerable<EmployeeApiModel> GetEmployeeDirectReports(int id);
+        IEnumerable<Employee> GetEmployeeDirectReports(int id);
 
-        IEnumerable<EmployeeApiModel> GetDirectReports(int id);
-        IEnumerable<GenreApiModel> GetAllGenre();
-        GenreApiModel GetGenreById(int id);
+        IEnumerable<Employee> GetDirectReports(int id);
+        IEnumerable<Genre> GetAllGenre();
+        Genre GetGenreById(int id);
 
-        GenreApiModel AddGenre(GenreApiModel newGenreApiModel);
+        Genre AddGenre(Genre newGenre);
 
-        bool UpdateGenre(GenreApiModel genreApiModel);
+        bool UpdateGenre(Genre genre);
         bool DeleteGenre(int id);
-        IEnumerable<InvoiceLineApiModel> GetAllInvoiceLine();
-        InvoiceLineApiModel GetInvoiceLineById(int id);
+        IEnumerable<InvoiceLine> GetAllInvoiceLine();
+        InvoiceLine GetInvoiceLineById(int id);
 
-        IEnumerable<InvoiceLineApiModel> GetInvoiceLineByInvoiceId(int id);
+        IEnumerable<InvoiceLine> GetInvoiceLineByInvoiceId(int id);
 
-        IEnumerable<InvoiceLineApiModel> GetInvoiceLineByTrackId(int id);
+        IEnumerable<InvoiceLine> GetInvoiceLineByTrackId(int id);
 
-        InvoiceLineApiModel AddInvoiceLine(InvoiceLineApiModel newInvoiceLineApiModel);
+        InvoiceLine AddInvoiceLine(InvoiceLine newInvoiceLine);
 
-        bool UpdateInvoiceLine(InvoiceLineApiModel invoiceLineApiModel);
+        bool UpdateInvoiceLine(InvoiceLine invoiceLine);
 
         bool DeleteInvoiceLine(int id);
-        IEnumerable<InvoiceApiModel> GetAllInvoice();
-        InvoiceApiModel GetInvoiceById(int id);
+        IEnumerable<Invoice> GetAllInvoice();
+        Invoice GetInvoiceById(int id);
 
-        IEnumerable<InvoiceApiModel> GetInvoiceByCustomerId(int id);
+        IEnumerable<Invoice> GetInvoiceByCustomerId(int id);
 
-        InvoiceApiModel AddInvoice(InvoiceApiModel newInvoiceApiModel);
+        Invoice AddInvoice(Invoice newInvoice);
 
-        bool UpdateInvoice(InvoiceApiModel invoiceApiModel);
+        bool UpdateInvoice(Invoice invoice);
 
         bool DeleteInvoice(int id);
         
-        IEnumerable<InvoiceApiModel> GetInvoiceByEmployeeId(int id);
+        IEnumerable<Invoice> GetInvoiceByEmployeeId(int id);
         
-        IEnumerable<MediaTypeApiModel> GetAllMediaType();
-        MediaTypeApiModel GetMediaTypeById(int id);
+        IEnumerable<MediaType> GetAllMediaType();
+        MediaType GetMediaTypeById(int id);
 
-        MediaTypeApiModel AddMediaType(MediaTypeApiModel newMediaTypeApiModel);
+        MediaType AddMediaType(MediaType newMediaType);
 
-        bool UpdateMediaType(MediaTypeApiModel mediaTypeApiModel);
+        bool UpdateMediaType(MediaType mediaType);
 
         bool DeleteMediaType(int id);
-        IEnumerable<PlaylistApiModel> GetAllPlaylist();
-        PlaylistApiModel GetPlaylistById(int id);
+        IEnumerable<Playlist> GetAllPlaylist();
+        Playlist GetPlaylistById(int id);
 
-        PlaylistApiModel AddPlaylist(PlaylistApiModel newPlaylistApiModel);
+        Playlist AddPlaylist(Playlist newPlaylist);
 
-        bool UpdatePlaylist(PlaylistApiModel playlistApiModel);
+        bool UpdatePlaylist(Playlist playlist);
 
         bool DeletePlaylist(int id);
         
-        IEnumerable<PlaylistApiModel> GetPlaylistByTrackId(int id);
+        IEnumerable<Playlist> GetPlaylistByTrackId(int id);
         
-        IEnumerable<TrackApiModel> GetAllTrack();
-        TrackApiModel GetTrackById(int id);
-        IEnumerable<TrackApiModel> GetTrackByAlbumId(int id);
-        IEnumerable<TrackApiModel> GetTrackByGenreId(int id);
+        IEnumerable<Track> GetAllTrack();
+        Track GetTrackById(int id);
+        IEnumerable<Track> GetTrackByAlbumId(int id);
+        IEnumerable<Track> GetTrackByGenreId(int id);
 
-        IEnumerable<TrackApiModel>
+        IEnumerable<Track>
             GetTrackByMediaTypeId(int id);
 
-        IEnumerable<TrackApiModel> GetTrackByPlaylistId(int id);
+        IEnumerable<Track> GetTrackByPlaylistId(int id);
 
-        TrackApiModel AddTrack(TrackApiModel newTrackApiModel);
+        Track AddTrack(Track newTrack);
 
-        bool UpdateTrack(TrackApiModel trackApiModel);
+        bool UpdateTrack(Track track);
         bool DeleteTrack(int id);
         
-        IEnumerable<TrackApiModel> GetTrackByArtistId(int id);
-        IEnumerable<TrackApiModel> GetTrackByInvoiceId(int id);
+        IEnumerable<Track> GetTrackByArtistId(int id);
+        IEnumerable<Track> GetTrackByInvoiceId(int id);
     }
 }

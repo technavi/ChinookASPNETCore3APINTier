@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -20,8 +21,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<InvoiceLineApiModel>))]
-        public ActionResult<List<InvoiceLineApiModel>> Get()
+        [Produces(typeof(List<InvoiceLine>))]
+        public ActionResult<List<InvoiceLine>> Get()
         {
             try
             {
@@ -34,8 +35,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(InvoiceLineApiModel))]
-        public ActionResult<InvoiceLineApiModel> Get(int id)
+        [Produces(typeof(InvoiceLine))]
+        public ActionResult<InvoiceLine> Get(int id)
         {
             try
             {
@@ -54,8 +55,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("invoice/{id}")]
-        [Produces(typeof(List<InvoiceLineApiModel>))]
-        public ActionResult<InvoiceLineApiModel> GetByInvoiceId(int id)
+        [Produces(typeof(List<InvoiceLine>))]
+        public ActionResult<InvoiceLine> GetByInvoiceId(int id)
         {
             try
             {
@@ -74,8 +75,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("track/{id}")]
-        [Produces(typeof(List<InvoiceLineApiModel>))]
-        public ActionResult<InvoiceLineApiModel> GetByTrackId(int id)
+        [Produces(typeof(List<InvoiceLine>))]
+        public ActionResult<InvoiceLine> GetByTrackId(int id)
         {
             try
             {
@@ -94,7 +95,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<InvoiceLineApiModel> Post([FromBody] InvoiceLineApiModel input)
+        public ActionResult<InvoiceLine> Post([FromBody] InvoiceLine input)
         {
             try
             {
@@ -110,7 +111,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<InvoiceLineApiModel> Put(int id, [FromBody] InvoiceLineApiModel input)
+        public ActionResult<InvoiceLine> Put(int id, [FromBody] InvoiceLine input)
         {
             try
             {

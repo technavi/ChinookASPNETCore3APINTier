@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -20,8 +20,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<CustomerApiModel>))]
-        public ActionResult<List<CustomerApiModel>> Get()
+        [Produces(typeof(List<Customer>))]
+        public ActionResult<List<Customer>> Get()
         {
             try
             {
@@ -34,8 +34,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(CustomerApiModel))]
-        public ActionResult<CustomerApiModel> Get(int id)
+        [Produces(typeof(Customer))]
+        public ActionResult<Customer> Get(int id)
         {
             try
             {
@@ -54,8 +54,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("supportrep/{id}")]
-        [Produces(typeof(List<CustomerApiModel>))]
-        public ActionResult<CustomerApiModel> GetBySupportRepId(int id)
+        [Produces(typeof(List<Customer>))]
+        public ActionResult<Customer> GetBySupportRepId(int id)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<CustomerApiModel> Post([FromBody] CustomerApiModel input)
+        public ActionResult<Customer> Post([FromBody] Customer input)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<CustomerApiModel> Put(int id, [FromBody] CustomerApiModel input)
+        public ActionResult<Customer> Put(int id, [FromBody] Customer input)
         {
             try
             {

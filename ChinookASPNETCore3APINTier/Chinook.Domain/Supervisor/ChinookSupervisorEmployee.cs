@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Chinook.Domain.Entities;
 using Chinook.Domain.Extensions;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Chinook.Domain.Supervisor
 {
     public partial class ChinookSupervisor
     {
-        public IEnumerable<EmployeeApiModel> GetAllEmployee()
+        public IEnumerable<Employee> GetAllEmployee()
         {
-            var employees = _employeeRepository.GetAll().ConvertAll();
+            var employees = _employeeRepository.GetAll();
             foreach (var employee in employees)
             {
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
@@ -20,70 +21,70 @@ namespace Chinook.Domain.Supervisor
             return employees;
         }
 
-        public EmployeeApiModel GetEmployeeById(int id)
+        public Employee GetEmployeeById(int id)
         {
-            var employeeApiModelCached = _cache.Get<EmployeeApiModel>(string.Concat("Employee-", id));
+            var employeeCached = _cache.Get<Employee>(string.Concat("Employee-", id));
 
-            if (employeeApiModelCached != null)
+            if (employeeCached != null)
             {
-                return employeeApiModelCached;
+                return employeeCached;
             }
             else
             {
-                var employeeApiModel = (_employeeRepository.GetById(id)).Convert();
-                employeeApiModel.Customers = (GetCustomerBySupportRepId(employeeApiModel.EmployeeId)).ToList();
-                //employeeApiModel.DirectReports = (GetEmployeeDirectReports(employeeApiModel.EmployeeId)).ToList();
-                // employeeApiModel.Manager = employeeApiModel.ReportsTo.HasValue
+                var employee = (_employeeRepository.GetById(id));
+                employee.Customers = (GetCustomerBySupportRepId(employee.EmployeeId)).ToList();
+                //employee.DirectReports = (GetEmployeeDirectReports(employee.EmployeeId)).ToList();
+                // employee.Manager = employee.ReportsTo.HasValue
                 //     ? GetEmployeeReportsTo(id)
                 //     : null;
-                // if (employeeApiModel.Manager != null)
-                //     employeeApiModel.ReportsToName = employeeApiModel.ReportsTo.HasValue
-                //         ? $"{employeeApiModel.Manager.LastName}, {employeeApiModel.Manager.FirstName}"
+                // if (employee.Manager != null)
+                //     employee.ReportsToName = employee.ReportsTo.HasValue
+                //         ? $"{employee.Manager.LastName}, {employee.Manager.FirstName}"
                 //         : string.Empty;
 
                 var cacheEntryOptions =
                     new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
-                _cache.Set(string.Concat("Employee-", employeeApiModel.EmployeeId), employeeApiModel, cacheEntryOptions);
+                _cache.Set(string.Concat("Employee-", employee.EmployeeId), employee, cacheEntryOptions);
 
-                return employeeApiModel;
+                return employee;
             }
         }
 
-        public EmployeeApiModel GetEmployeeReportsTo(int id)
+        public Employee GetEmployeeReportsTo(int id)
         {
             var employee = _employeeRepository.GetReportsTo(id);
-            return employee.Convert();
+            return employee;
         }
 
-        public EmployeeApiModel AddEmployee(EmployeeApiModel newEmployeeApiModel)
+        public Employee AddEmployee(Employee newEmployee)
         {
-            var employee = newEmployeeApiModel.Convert();
+            var employee = newEmployee;
 
             employee = _employeeRepository.Add(employee);
-            newEmployeeApiModel.EmployeeId = employee.EmployeeId;
-            return newEmployeeApiModel;
+            newEmployee.EmployeeId = employee.EmployeeId;
+            return newEmployee;
         }
 
-        public bool UpdateEmployee(EmployeeApiModel employeeApiModel)
+        public bool UpdateEmployee(Employee _employee)
         {
-            var employee = _employeeRepository.GetById(employeeApiModel.EmployeeId);
+            var employee = _employeeRepository.GetById(_employee.EmployeeId);
 
             if (employee == null) return false;
-            employee.EmployeeId = employeeApiModel.EmployeeId;
-            employee.LastName = employeeApiModel.LastName;
-            employee.FirstName = employeeApiModel.FirstName;
-            employee.Title = employeeApiModel.Title;
-            employee.ReportsTo = employeeApiModel.ReportsTo;
-            employee.BirthDate = employeeApiModel.BirthDate;
-            employee.HireDate = employeeApiModel.HireDate;
-            employee.Address = employeeApiModel.Address;
-            employee.City = employeeApiModel.City;
-            employee.State = employeeApiModel.State;
-            employee.Country = employeeApiModel.Country;
-            employee.PostalCode = employeeApiModel.PostalCode;
-            employee.Phone = employeeApiModel.Phone;
-            employee.Fax = employeeApiModel.Fax;
-            employee.Email = employeeApiModel.Email;
+            employee.EmployeeId = employee.EmployeeId;
+            employee.LastName = employee.LastName;
+            employee.FirstName = employee.FirstName;
+            employee.Title = employee.Title;
+            employee.ReportsTo = employee.ReportsTo;
+            employee.BirthDate = employee.BirthDate;
+            employee.HireDate = employee.HireDate;
+            employee.Address = employee.Address;
+            employee.City = employee.City;
+            employee.State = employee.State;
+            employee.Country = employee.Country;
+            employee.PostalCode = employee.PostalCode;
+            employee.Phone = employee.Phone;
+            employee.Fax = employee.Fax;
+            employee.Email = employee.Email;
 
             return _employeeRepository.Update(employee);
         }
@@ -91,16 +92,16 @@ namespace Chinook.Domain.Supervisor
         public bool DeleteEmployee(int id) 
             => _employeeRepository.Delete(id);
 
-        public IEnumerable<EmployeeApiModel> GetEmployeeDirectReports(int id)
+        public IEnumerable<Employee> GetEmployeeDirectReports(int id)
         {
             var employees = _employeeRepository.GetDirectReports(id);
-            return employees.ConvertAll();
+            return employees;
         }
 
-        public IEnumerable<EmployeeApiModel> GetDirectReports(int id)
+        public IEnumerable<Employee> GetDirectReports(int id)
         {
             var employees = _employeeRepository.GetDirectReports(id);
-            return employees.ConvertAll();
+            return employees;
         }
     }
 }

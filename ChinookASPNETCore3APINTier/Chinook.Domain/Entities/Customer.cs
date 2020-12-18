@@ -1,11 +1,12 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
+
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class Customer : IConvertModel<Customer, CustomerApiModel>
+    public class Customer  
     {
         public Customer()
         {
@@ -31,22 +32,7 @@ namespace Chinook.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<Invoice> Invoices { get; set; }
         
-        public CustomerApiModel Convert() =>
-            new CustomerApiModel
-            {
-                CustomerId = CustomerId,
-                FirstName = FirstName,
-                LastName = LastName,
-                Company = Company,
-                Address = Address,
-                City = City,
-                State = State,
-                Country = Country,
-                PostalCode = PostalCode,
-                Phone = Phone,
-                Fax = Fax,
-                Email = Email,
-                SupportRepId = SupportRepId
-            };
+        [NotMapped]
+        public string SupportRepName { get; internal set; }
     }
 }

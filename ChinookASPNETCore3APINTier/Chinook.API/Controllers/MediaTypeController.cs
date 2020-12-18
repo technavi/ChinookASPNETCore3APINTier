@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -21,9 +22,9 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<MediaTypeApiModel>))]
+        [Produces(typeof(List<MediaType>))]
         [ResponseCache(Duration = 604800)] // cache for a week
-        public ActionResult<List<MediaTypeApiModel>> Get()
+        public ActionResult<List<MediaType>> Get()
         {
             try
             {
@@ -36,8 +37,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(MediaTypeApiModel))]
-        public ActionResult<MediaTypeApiModel> Get(int id)
+        [Produces(typeof(MediaType))]
+        public ActionResult<MediaType> Get(int id)
         {
             try
             {
@@ -56,7 +57,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<MediaTypeApiModel> Post([FromBody] MediaTypeApiModel input)
+        public ActionResult<MediaType> Post([FromBody] MediaType input)
         {
             try
             {
@@ -72,7 +73,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<MediaTypeApiModel> Put(int id, [FromBody] MediaTypeApiModel input)
+        public ActionResult<MediaType> Put(int id, [FromBody] MediaType input)
         {
             try
             {

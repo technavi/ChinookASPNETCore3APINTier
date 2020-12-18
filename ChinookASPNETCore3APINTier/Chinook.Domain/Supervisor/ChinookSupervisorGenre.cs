@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using Chinook.Domain.Extensions;
-using Chinook.Domain.ApiModels;
+
 using System.Linq;
 using Microsoft.Extensions.Caching.Memory;
+using Chinook.Domain.Entities;
 
 namespace Chinook.Domain.Supervisor
 {
     public partial class ChinookSupervisor
     {
-        public IEnumerable<GenreApiModel> GetAllGenre()
+        public IEnumerable<Genre> GetAllGenre()
         {
-            var genres = _genreRepository.GetAll().ConvertAll();
+            var genres = _genreRepository.GetAll();
 
             foreach (var genre in genres)
             {
@@ -22,44 +23,43 @@ namespace Chinook.Domain.Supervisor
             return genres;
         }
 
-        public GenreApiModel GetGenreById(int id)
+        public Genre GetGenreById(int id)
         {
-            var genreApiModelCached = _cache.Get<GenreApiModel>(string.Concat("Genre-", id));
+            var genreCached = _cache.Get<Genre>(string.Concat("Genre-", id));
 
-            if (genreApiModelCached != null)
+            if (genreCached != null)
             {
-                return genreApiModelCached;
+                return genreCached;
             }
             else
             {
                 var genre = _genreRepository.GetById(id);
                 if (genre != null) return null;
-                var genreApiModel = genre.Convert();
-                genreApiModel.Tracks = (GetTrackByGenreId(genreApiModel.GenreId)).ToList();
+                genre.Tracks = (GetTrackByGenreId(genre.GenreId)).ToList();
                 
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
-                _cache.Set(string.Concat("Genre-", genreApiModel.GenreId), genreApiModel, cacheEntryOptions);
+                _cache.Set(string.Concat("Genre-", genre.GenreId), genre, cacheEntryOptions);
                 
-                return genreApiModel;
+                return genre;
             }
         }
 
-        public GenreApiModel AddGenre(GenreApiModel newGenreApiModel)
+        public Genre AddGenre(Genre newGenre)
         {
-            var genre = newGenreApiModel.Convert();
+            var genre = newGenre;
 
             genre = _genreRepository.Add(genre);
-            newGenreApiModel.GenreId = genre.GenreId;
-            return newGenreApiModel;
+            newGenre.GenreId = genre.GenreId;
+            return newGenre;
         }
 
-        public bool UpdateGenre(GenreApiModel genreApiModel)
+        public bool UpdateGenre(Genre _genre)
         {
-            var genre = _genreRepository.GetById(genreApiModel.GenreId);
+            var genre = _genreRepository.GetById(_genre.GenreId);
 
             if (genre == null) return false;
-            genre.GenreId = genreApiModel.GenreId;
-            genre.Name = genreApiModel.Name;
+            genre.GenreId = genre.GenreId;
+            genre.Name = genre.Name;
 
             return _genreRepository.Update(genre);
         }

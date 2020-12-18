@@ -1,12 +1,12 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
+
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class Employee : IConvertModel<Employee, EmployeeApiModel>
+    public class Employee  
     {
         public Employee()
         {
@@ -37,24 +37,6 @@ namespace Chinook.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }
         
-        public EmployeeApiModel Convert() =>
-            new EmployeeApiModel
-            {
-                EmployeeId = EmployeeId,
-                LastName = LastName,
-                FirstName = FirstName,
-                Title = Title,
-                ReportsTo = ReportsTo,
-                BirthDate = BirthDate,
-                HireDate = HireDate,
-                Address = Address,
-                City = City,
-                State = State,
-                Country = Country,
-                PostalCode = PostalCode,
-                Phone = Phone,
-                Fax = Fax,
-                Email = Email
-            };
+         
     }
 }

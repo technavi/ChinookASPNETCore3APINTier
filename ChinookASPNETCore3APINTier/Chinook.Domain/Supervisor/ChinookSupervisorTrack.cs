@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Chinook.Domain.Entities;
 using Chinook.Domain.Extensions;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Chinook.Domain.Supervisor
 {
     public partial class ChinookSupervisor
     {
-        public IEnumerable<TrackApiModel> GetAllTrack()
+        public IEnumerable<Track> GetAllTrack()
         {
-            var tracks = _trackRepository.GetAll().ConvertAll();
+            var tracks = _trackRepository.GetAll();
             foreach (var track in tracks)
             {
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
@@ -19,85 +20,85 @@ namespace Chinook.Domain.Supervisor
             return tracks;
         }
 
-        public TrackApiModel GetTrackById(int id)
+        public Track GetTrackById(int id)
         {
-            var trackApiModelCached = _cache.Get<TrackApiModel>(string.Concat("Track-", id));
+            var trackCached = _cache.Get<Track>(string.Concat("Track-", id));
 
-            if (trackApiModelCached != null)
+            if (trackCached != null)
             {
-                return trackApiModelCached;
+                return trackCached;
             }
             else
             {
-                var trackApiModel = (_trackRepository.GetById(id)).Convert();
-                trackApiModel.Genre = GetGenreById(trackApiModel.GenreId.GetValueOrDefault());
-                trackApiModel.Album = GetAlbumById(trackApiModel.AlbumId);
-                trackApiModel.MediaType = GetMediaTypeById(trackApiModel.MediaTypeId);
-                if (trackApiModel.Album != null)
+                var track = (_trackRepository.GetById(id));
+                track.Genre = GetGenreById(track.GenreId.GetValueOrDefault());
+                track.Album = GetAlbumById(track.AlbumId);
+                track.MediaType = GetMediaTypeById(track.MediaTypeId);
+                if (track.Album != null)
                 {
-                    trackApiModel.AlbumName = trackApiModel.Album.Title;
+                    track.AlbumName = track.Album.Title;
                 }
-                trackApiModel.MediaTypeName = trackApiModel.MediaType.Name;
-                if (trackApiModel.Genre != null)
+                track.MediaTypeName = track.MediaType.Name;
+                if (track.Genre != null)
                 {
-                    trackApiModel.GenreName = trackApiModel.Genre.Name;   
+                    track.GenreName = track.Genre.Name;   
                 }
 
                 var cacheEntryOptions =
                     new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
-                _cache.Set(string.Concat("Track-", trackApiModel.TrackId), trackApiModel, cacheEntryOptions);
+                _cache.Set(string.Concat("Track-", track.TrackId), track, cacheEntryOptions);
 
-                return trackApiModel;
+                return track;
             }
         }
 
-        public IEnumerable<TrackApiModel> GetTrackByAlbumId(int id)
+        public IEnumerable<Track> GetTrackByAlbumId(int id)
         {
             var tracks = _trackRepository.GetByAlbumId(id);
-            return tracks.ConvertAll();
+            return tracks;
         }
 
-        public IEnumerable<TrackApiModel> GetTrackByGenreId(int id)
+        public IEnumerable<Track> GetTrackByGenreId(int id)
         {
             var tracks = _trackRepository.GetByGenreId(id);
-            return tracks.ConvertAll();
+            return tracks;
         }
 
-        public IEnumerable<TrackApiModel> GetTrackByMediaTypeId(int id)
+        public IEnumerable<Track> GetTrackByMediaTypeId(int id)
         {
             var tracks = _trackRepository.GetByMediaTypeId(id);
-            return tracks.ConvertAll();
+            return tracks;
         }
 
-        public IEnumerable<TrackApiModel> GetTrackByPlaylistId(int id)
+        public IEnumerable<Track> GetTrackByPlaylistId(int id)
         {
             var tracks = _trackRepository.GetByPlaylistId(id);
-            return tracks.ConvertAll();
+            return tracks;
         }
 
-        public TrackApiModel AddTrack(TrackApiModel newTrackApiModel)
+        public Track AddTrack(Track newTrack)
         {
-            var track = newTrackApiModel.Convert();
+            var track = newTrack;
 
             _trackRepository.Add(track);
-            newTrackApiModel.TrackId = track.TrackId;
-            return newTrackApiModel;
+            newTrack.TrackId = track.TrackId;
+            return newTrack;
         }
 
-        public bool UpdateTrack(TrackApiModel trackApiModel)
+        public bool UpdateTrack(Track _track)
         {
-            var track = _trackRepository.GetById(trackApiModel.TrackId);
+            var track = _trackRepository.GetById(_track.TrackId);
 
             if (track == null) return false;
-            track.TrackId = trackApiModel.TrackId;
-            track.Name = trackApiModel.Name;
-            track.AlbumId = trackApiModel.AlbumId;
-            track.MediaTypeId = trackApiModel.MediaTypeId;
-            track.GenreId = trackApiModel.GenreId;
-            track.Composer = trackApiModel.Composer;
-            track.Milliseconds = trackApiModel.Milliseconds;
-            track.Bytes = trackApiModel.Bytes;
-            track.UnitPrice = trackApiModel.UnitPrice;
+            track.TrackId = track.TrackId;
+            track.Name = track.Name;
+            track.AlbumId = track.AlbumId;
+            track.MediaTypeId = track.MediaTypeId;
+            track.GenreId = track.GenreId;
+            track.Composer = track.Composer;
+            track.Milliseconds = track.Milliseconds;
+            track.Bytes = track.Bytes;
+            track.UnitPrice = track.UnitPrice;
 
             return _trackRepository.Update(track);
         }
@@ -105,16 +106,16 @@ namespace Chinook.Domain.Supervisor
         public bool DeleteTrack(int id) 
             => _trackRepository.Delete(id);
         
-        public IEnumerable<TrackApiModel> GetTrackByArtistId(int id)
+        public IEnumerable<Track> GetTrackByArtistId(int id)
         {
             var tracks = _trackRepository.GetByArtistId(id);
-            return tracks.ConvertAll();
+            return tracks;
         }
 
-        public IEnumerable<TrackApiModel> GetTrackByInvoiceId(int id)
+        public IEnumerable<Track> GetTrackByInvoiceId(int id)
         {
             var tracks = _trackRepository.GetByInvoiceId(id);
-            return tracks.ConvertAll();
+            return tracks;
         }
     }
 }

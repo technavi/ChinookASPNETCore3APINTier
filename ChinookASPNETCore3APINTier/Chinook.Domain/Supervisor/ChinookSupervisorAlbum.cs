@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Chinook.Domain.Entities;
 using Chinook.Domain.Extensions;
-using Chinook.Domain.ApiModels;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Chinook.Domain.Supervisor
 {
     public partial class ChinookSupervisor
     {
-        public IEnumerable<AlbumApiModel> GetAllAlbum()
+        public IEnumerable<Album> GetAllAlbum()
         {
-            var albums = _albumRepository.GetAll().ConvertAll();
+            var albums = _albumRepository.GetAll();
             foreach (var album in albums)
             {
                 var cacheEntryOptions =
@@ -21,52 +21,51 @@ namespace Chinook.Domain.Supervisor
             return albums;
         }
 
-        public AlbumApiModel GetAlbumById(int id)
+        public Album GetAlbumById(int id)
         {
-            var albumApiModelCached = _cache.Get<AlbumApiModel>(string.Concat("Album-", id));
+            var albumCached = _cache.Get<Album>(string.Concat("Album-", id));
 
-            if (albumApiModelCached != null)
+            if (albumCached != null)
             {
-                return albumApiModelCached;
+                return albumCached;
             }
             else
             {
                 var album = _albumRepository.GetById(id);
                 if (album == null) return null;
-                var albumApiModel = album.Convert();
-                albumApiModel.ArtistName = (_artistRepository.GetById(albumApiModel.ArtistId)).Name;
+                album.ArtistName = (_artistRepository.GetById(album.ArtistId)).Name;
 
                 var cacheEntryOptions =
                     new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
-                _cache.Set(string.Concat("Album-", albumApiModel.AlbumId), albumApiModel, cacheEntryOptions);
+                _cache.Set(string.Concat("Album-", album.AlbumId), album, cacheEntryOptions);
 
-                return albumApiModel;
+                return album;
             }
         }
 
-        public IEnumerable<AlbumApiModel> GetAlbumByArtistId(int id)
+        public IEnumerable<Album> GetAlbumByArtistId(int id)
         {
             var albums = _albumRepository.GetByArtistId(id);
-            return albums.ConvertAll();
+            return albums;
         }
 
-        public AlbumApiModel AddAlbum(AlbumApiModel newAlbumApiModel)
+        public Album AddAlbum(Album newAlbum)
         {
-            var album = newAlbumApiModel.Convert();
+            var album = newAlbum;
 
             album = _albumRepository.Add(album);
-            newAlbumApiModel.AlbumId = album.AlbumId;
-            return newAlbumApiModel;
+            newAlbum.AlbumId = album.AlbumId;
+            return newAlbum;
         }
 
-        public bool UpdateAlbum(AlbumApiModel albumApiModel)
+        public bool UpdateAlbum(Album _album)
         {
-            var album = _albumRepository.GetById(albumApiModel.AlbumId);
+            var album = _albumRepository.GetById(_album.AlbumId);
 
             if (album is null) return false;
-            album.AlbumId = albumApiModel.AlbumId;
-            album.Title = albumApiModel.Title;
-            album.ArtistId = albumApiModel.ArtistId;
+            album.AlbumId = album.AlbumId;
+            album.Title = album.Title;
+            album.ArtistId = album.ArtistId;
 
             return _albumRepository.Update(album);
         }

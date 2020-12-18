@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -20,8 +21,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<EmployeeApiModel>))]
-        public ActionResult<List<EmployeeApiModel>> Get()
+        [Produces(typeof(List<Employee>))]
+        public ActionResult<List<Employee>> Get()
         {
             try
             {
@@ -34,8 +35,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(EmployeeApiModel))]
-        public ActionResult<EmployeeApiModel> Get(int id)
+        [Produces(typeof(Employee))]
+        public ActionResult<Employee> Get(int id)
         {
             try
             {
@@ -54,8 +55,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("reportsto/{id}")]
-        [Produces(typeof(List<EmployeeApiModel>))]
-        public ActionResult<List<EmployeeApiModel>> GetReportsTo(int id)
+        [Produces(typeof(List<Employee>))]
+        public ActionResult<List<Employee>> GetReportsTo(int id)
         {
             try
             {
@@ -74,8 +75,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("directreports/{id}")]
-        [Produces(typeof(EmployeeApiModel))]
-        public ActionResult<EmployeeApiModel> GetDirectReports(int id)
+        [Produces(typeof(Employee))]
+        public ActionResult<Employee> GetDirectReports(int id)
         {
             try
             {
@@ -94,7 +95,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<EmployeeApiModel> Post([FromBody] EmployeeApiModel input)
+        public ActionResult<Employee> Post([FromBody] Employee input)
         {
             try
             {
@@ -110,7 +111,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<EmployeeApiModel> Put(int id, [FromBody] EmployeeApiModel input)
+        public ActionResult<Employee> Put(int id, [FromBody] Employee input)
         {
             try
             {

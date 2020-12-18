@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Chinook.Domain.Supervisor;
-using Chinook.Domain.ApiModels;
 using Microsoft.AspNetCore.Cors;
+using Chinook.Domain.Entities;
 
 namespace Chinook.API.Controllers
 {
@@ -20,8 +20,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet]
-        [Produces(typeof(List<ArtistApiModel>))]
-        public ActionResult<List<ArtistApiModel>> Get()
+        [Produces(typeof(List<Artist>))]
+        public ActionResult<List<Artist>> Get()
         {
             try
             {
@@ -34,8 +34,8 @@ namespace Chinook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(ArtistApiModel))]
-        public ActionResult<ArtistApiModel> Get(int id)
+        [Produces(typeof(Artist))]
+        public ActionResult<Artist> Get(int id)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ArtistApiModel> Post([FromBody] ArtistApiModel input)
+        public ActionResult<Artist> Post([FromBody] Artist input)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Chinook.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<ArtistApiModel> Put(int id, [FromBody] ArtistApiModel input)
+        public ActionResult<Artist> Put(int id, [FromBody] Artist input)
         {
             try
             {

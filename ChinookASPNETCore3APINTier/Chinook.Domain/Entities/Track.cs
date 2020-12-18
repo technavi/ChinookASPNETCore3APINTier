@@ -1,5 +1,5 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class Track : IConvertModel<Track, TrackApiModel>
+    public class Track 
     {
         public Track()
         {
@@ -43,18 +43,14 @@ namespace Chinook.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
         
-        public TrackApiModel Convert() =>
-            new TrackApiModel
-            {
-                TrackId = TrackId,
-                Name = Name,
-                AlbumId = AlbumId,
-                MediaTypeId = MediaTypeId,
-                GenreId = GenreId,
-                Composer = Composer,
-                Milliseconds = Milliseconds,
-                Bytes = Bytes,
-                UnitPrice = UnitPrice
-            };
+        [NotMapped]
+        [JsonIgnore]
+        public string AlbumName { get; internal set; }
+        [NotMapped]
+        [JsonIgnore]
+        public string MediaTypeName { get; internal set; }
+        [NotMapped]
+        [JsonIgnore]
+        public string GenreName { get; internal set; }
     }
 }

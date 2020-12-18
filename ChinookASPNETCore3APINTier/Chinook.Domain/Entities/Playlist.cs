@@ -1,11 +1,12 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
+
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class Playlist : IConvertModel<Playlist, PlaylistApiModel>
+    public class Playlist  
     {
         public Playlist()
         {
@@ -17,12 +18,9 @@ namespace Chinook.Domain.Entities
 
         [JsonIgnore]
         public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
-        
-        public PlaylistApiModel Convert() =>
-            new PlaylistApiModel
-            {
-                PlaylistId = PlaylistId,
-                Name = Name
-            };
+
+        [JsonIgnore]
+        [NotMapped]
+        public List<Track> Tracks { get; internal set; }
     }
 }

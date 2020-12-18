@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using Chinook.Domain.Extensions;
-using Chinook.Domain.ApiModels;
 using System.Linq;
 using Microsoft.Extensions.Caching.Memory;
+using Chinook.Domain.Entities;
 
 namespace Chinook.Domain.Supervisor
 {
     public partial class ChinookSupervisor
     {
-        public IEnumerable<MediaTypeApiModel> GetAllMediaType()
+        public IEnumerable<MediaType> GetAllMediaType()
         {
-            var mediaTypes = _mediaTypeRepository.GetAll().ConvertAll();
+            var mediaTypes = _mediaTypeRepository.GetAll();
             foreach (var mediaType in mediaTypes)
             {
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
@@ -20,48 +20,48 @@ namespace Chinook.Domain.Supervisor
             return mediaTypes;
         }
 
-        public MediaTypeApiModel GetMediaTypeById(int id)
+        public MediaType GetMediaTypeById(int id)
         {
-            var mediaTypeApiModelCached = _cache.Get<MediaTypeApiModel>(string.Concat("MediaType-", id));
+            var mediaTypeCached = _cache.Get<MediaType>(string.Concat("MediaType-", id));
 
-            if (mediaTypeApiModelCached != null)
+            if (mediaTypeCached != null)
             {
-                return mediaTypeApiModelCached;
+                return mediaTypeCached;
             }
             else
             {
-                var mediaTypeApiModel = (_mediaTypeRepository.GetById(id)).Convert();
-                mediaTypeApiModel.Tracks = (GetTrackByMediaTypeId(mediaTypeApiModel.MediaTypeId)).ToList();
+                var mediaType = (_mediaTypeRepository.GetById(id));
+                mediaType.Tracks = (GetTrackByMediaTypeId(mediaType.MediaTypeId)).ToList();
 
                 var cacheEntryOptions =
                     new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
-                _cache.Set(string.Concat("MediaType-", mediaTypeApiModel.MediaTypeId), mediaTypeApiModel, cacheEntryOptions);
+                _cache.Set(string.Concat("MediaType-", mediaType.MediaTypeId), mediaType, cacheEntryOptions);
 
-                return mediaTypeApiModel;
+                return mediaType;
             }
         }
 
-        public MediaTypeApiModel AddMediaType(MediaTypeApiModel newMediaTypeApiModel)
+        public MediaType AddMediaType(MediaType newMediaType)
         {
             /*var mediaType = new MediaType
             {
-                Name = newMediaTypeApiModel.Name
+                Name = newMediaType.Name
             };*/
 
-            var mediaType = newMediaTypeApiModel.Convert();
+            var mediaType = newMediaType;
 
             mediaType = _mediaTypeRepository.Add(mediaType);
-            newMediaTypeApiModel.MediaTypeId = mediaType.MediaTypeId;
-            return newMediaTypeApiModel;
+            newMediaType.MediaTypeId = mediaType.MediaTypeId;
+            return newMediaType;
         }
 
-        public bool UpdateMediaType(MediaTypeApiModel mediaTypeApiModel)
+        public bool UpdateMediaType(MediaType _mediaType)
         {
-            var mediaType = _mediaTypeRepository.GetById(mediaTypeApiModel.MediaTypeId);
+            var mediaType = _mediaTypeRepository.GetById(_mediaType.MediaTypeId);
 
             if (mediaType == null) return false;
-            mediaType.MediaTypeId = mediaTypeApiModel.MediaTypeId;
-            mediaType.Name = mediaTypeApiModel.Name;
+            mediaType.MediaTypeId = mediaType.MediaTypeId;
+            mediaType.Name = mediaType.Name;
 
             return _mediaTypeRepository.Update(mediaType);
         }

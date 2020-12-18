@@ -1,12 +1,12 @@
 ﻿using Chinook.Domain.Converters;
-using Chinook.Domain.ApiModels;
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Chinook.Domain.Entities
 {
-    public class Genre : IConvertModel<Genre, GenreApiModel>
+    public class Genre  
     {
         public Genre()
         {
@@ -21,11 +21,6 @@ namespace Chinook.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<Track> Tracks { get; set; }
         
-        public GenreApiModel Convert() =>
-            new GenreApiModel
-            {
-                GenreId = GenreId,
-                Name = Name
-            };
+      
     }
 }

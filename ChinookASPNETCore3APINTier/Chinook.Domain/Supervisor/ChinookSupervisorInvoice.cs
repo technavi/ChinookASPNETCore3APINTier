@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Chinook.Domain.Entities;
 using Chinook.Domain.Extensions;
-using Chinook.Domain.ApiModels;
+
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Chinook.Domain.Supervisor
 {
     public partial class ChinookSupervisor
     {
-        public IEnumerable<InvoiceApiModel> GetAllInvoice()
+        public IEnumerable<Invoice> GetAllInvoice()
         {
-            var invoices = _invoiceRepository.GetAll().ConvertAll();
+            var invoices = _invoiceRepository.GetAll();
             foreach (var invoice in invoices)
             {
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
@@ -20,59 +21,59 @@ namespace Chinook.Domain.Supervisor
             return invoices;
         }
         
-        public InvoiceApiModel GetInvoiceById(int id)
+        public Invoice GetInvoiceById(int id)
         {
-            var invoiceApiModelCached = _cache.Get<InvoiceApiModel>(string.Concat("Invoice-", id));
+            var invoiceCached = _cache.Get<Invoice>(string.Concat("Invoice-", id));
 
-            if (invoiceApiModelCached != null)
+            if (invoiceCached != null)
             {
-                return invoiceApiModelCached;
+                return invoiceCached;
             }
             else
             {
-                var invoiceApiModel = (_invoiceRepository.GetById(id)).Convert();
-                invoiceApiModel.Customer = GetCustomerById(invoiceApiModel.CustomerId);
-                invoiceApiModel.InvoiceLines = (GetInvoiceLineByInvoiceId(invoiceApiModel.InvoiceId)).ToList();
-                invoiceApiModel.CustomerName =
-                    $"{invoiceApiModel.Customer.LastName}, {invoiceApiModel.Customer.FirstName}";
+                var invoice = (_invoiceRepository.GetById(id));
+                invoice.Customer = GetCustomerById(invoice.CustomerId);
+                invoice.InvoiceLines = (GetInvoiceLineByInvoiceId(invoice.InvoiceId)).ToList();
+                invoice.CustomerName =
+                    $"{invoice.Customer.LastName}, {invoice.Customer.FirstName}";
 
                 var cacheEntryOptions =
                     new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(604800));
-                _cache.Set(string.Concat("Invoice-", invoiceApiModel.InvoiceId), invoiceApiModel, cacheEntryOptions);
+                _cache.Set(string.Concat("Invoice-", invoice.InvoiceId), invoice, cacheEntryOptions);
 
-                return invoiceApiModel;
+                return invoice;
             }
         }
 
-        public IEnumerable<InvoiceApiModel> GetInvoiceByCustomerId(int id)
+        public IEnumerable<Invoice> GetInvoiceByCustomerId(int id)
         {
             var invoices = _invoiceRepository.GetByCustomerId(id);
-            return invoices.ConvertAll();
+            return invoices;
         }
 
-        public InvoiceApiModel AddInvoice(InvoiceApiModel newInvoiceApiModel)
+        public Invoice AddInvoice(Invoice newInvoice)
         {
-            var invoice = newInvoiceApiModel.Convert();
+            var invoice = newInvoice;
 
             invoice = _invoiceRepository.Add(invoice);
-            newInvoiceApiModel.InvoiceId = invoice.InvoiceId;
-            return newInvoiceApiModel;
+            newInvoice.InvoiceId = invoice.InvoiceId;
+            return newInvoice;
         }
 
-        public bool UpdateInvoice(InvoiceApiModel invoiceApiModel)
+        public bool UpdateInvoice(Invoice _invoice)
         {
-            var invoice = _invoiceRepository.GetById(invoiceApiModel.InvoiceId);
+            var invoice = _invoiceRepository.GetById(_invoice.InvoiceId);
 
             if (invoice == null) return false;
-            invoice.InvoiceId = invoiceApiModel.InvoiceId;
-            invoice.CustomerId = invoiceApiModel.CustomerId;
-            invoice.InvoiceDate = invoiceApiModel.InvoiceDate;
-            invoice.BillingAddress = invoiceApiModel.BillingAddress;
-            invoice.BillingCity = invoiceApiModel.BillingCity;
-            invoice.BillingState = invoiceApiModel.BillingState;
-            invoice.BillingCountry = invoiceApiModel.BillingCountry;
-            invoice.BillingPostalCode = invoiceApiModel.BillingPostalCode;
-            invoice.Total = invoiceApiModel.Total;
+            invoice.InvoiceId = invoice.InvoiceId;
+            invoice.CustomerId = invoice.CustomerId;
+            invoice.InvoiceDate = invoice.InvoiceDate;
+            invoice.BillingAddress = invoice.BillingAddress;
+            invoice.BillingCity = invoice.BillingCity;
+            invoice.BillingState = invoice.BillingState;
+            invoice.BillingCountry = invoice.BillingCountry;
+            invoice.BillingPostalCode = invoice.BillingPostalCode;
+            invoice.Total = invoice.Total;
 
             return _invoiceRepository.Update(invoice);
         }
@@ -81,10 +82,10 @@ namespace Chinook.Domain.Supervisor
             => _invoiceRepository.Delete(id);
         
         
-        public IEnumerable<InvoiceApiModel> GetInvoiceByEmployeeId(int id)
+        public IEnumerable<Invoice> GetInvoiceByEmployeeId(int id)
         {
             var invoices = _invoiceRepository.GetByEmployeeId(id);
-            return invoices.ConvertAll();
+            return invoices;
         }
     }
 }
